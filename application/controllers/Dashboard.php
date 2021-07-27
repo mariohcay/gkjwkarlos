@@ -10,7 +10,10 @@ class Dashboard extends CI_Controller
     }
 
     public function index()
-    {
+    {   
+        if ($this->session->userdata('id')){
+            $this->m_jemaat->setBelumMemilih($this->session->userdata('id'));
+        }
         $data['title'] = 'Pemilihan Majelis - GKJW Jemaat Karangploso Periode xxxx/xxxx';
 
         $this->load->view('Templates/vHeader', $data);
@@ -40,7 +43,12 @@ class Dashboard extends CI_Controller
                 $this->session->set_flashdata('message', '<div class="alert alert-danger d-flex justify-content-between" role="alert"></i> <h6 class="my-auto">Maaf Anda sudah melakukan pemilihan dan tidak dapat memilih lagi</h6><i class="fa fa-exclamation-circle my-auto"></i></div>');
                 $this->session->set_flashdata(['kelompok' => $kelompok, 'nama' => $nama]);
                 redirect('Dashboard');
-            } else {
+            } else if  ($jemaat['status'] === "Sedang Memilih") {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger d-flex justify-content-between" role="alert"></i> <h6 class="my-auto">Maaf Anda sedang melakukan pemilihan, coba lagi nanti</h6><i class="fa fa-exclamation-circle my-auto"></i></div>');
+                $this->session->set_flashdata(['kelompok' => $kelompok, 'nama' => $nama]);
+                redirect('Dashboard');
+            }
+            else {
                 $this->session->set_userdata([
                     'id' => $jemaat['id'],
                     'kelompok' => $jemaat['kelompok']
@@ -59,6 +67,7 @@ class Dashboard extends CI_Controller
         if ($this->session->userdata('id')) {
             $data['title'] = 'Pemilihan Majelis - GKJW Jemaat Karangploso Periode xxxx/xxxx';
 
+            $this->m_jemaat->setSedangMemilih($this->session->userdata('id'));
             $kelompok = $this->session->userdata('kelompok');
             if (!$kelompok) {
                 $kelompok = "Pendem";

@@ -10,6 +10,14 @@ class M_jemaat extends CI_Model
         return $this->db->get_where('tb_jemaat', ['kelompok' => $kelompok])->result_array();
     }
 
+    public function setBelumMemilih($id){
+        $this->db->set('status', 'Belum Memilih')->where('id', $id)->update('tb_jemaat');
+    }
+
+    public function setSedangMemilih($id){
+        $this->db->set('status', 'Sedang Memilih')->where('id', $id)->update('tb_jemaat');
+    }
+
     public function sudahMemilih()
     {
         return $this->db->get_where('tb_jemaat', ['status' => 'Sudah Memilih'])->result_array();
@@ -32,16 +40,8 @@ class M_jemaat extends CI_Model
         return $this->db->get_where('tb_jemaat', ['id' => $id])->row_array();
     }
 
-    public function updateKehadiran($id, $password){
-        $this->db->set('status', 'HADIR')->set('password', $password)->set('waktuHadir', date('H:i:s'))->where('id', $id)->update('tb_jemaat');
-    }
-
     public function cekPassword($nama, $kelompok){
         return $this->db->get_where('tb_jemaat', ['nama'=> $nama, 'kelompok' => $kelompok])->row_array();
-    }
-
-    public function removePassword($password){
-        $this->db->set('password', '-')->set('status', 'MEMILIH')->where('password', $password)->update('tb_jemaat');
     }
 
     public function selesaiPilih($id){
