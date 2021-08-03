@@ -28,13 +28,14 @@ class Admin extends CI_Controller
         $this->load->view('Templates/vFooter');
     }
 
-        public function kehadiran(){
+    public function kehadiran(){
         if (!$this->session->userdata('id')){
             redirect('Admin');
         }
         $data['title'] = 'Pemilihan Majelis - GKJW Jemaat Karangploso';
         $data['sudah'] = $this->m_jemaat->sudahMemilih();
         $data['belum'] = $this->m_jemaat->belumMemilih();
+        $data['sedang'] = $this->m_jemaat->sedangMemilih();
 
         $this->load->view('Templates/vHeader', $data);
         // $this->load->view('Main/vMainHeader');
@@ -57,6 +58,12 @@ class Admin extends CI_Controller
             $this->session->set_flashdata('message', '<div class="alert alert-danger d-flex justify-content-between" role="alert"></i> <h6 class="my-auto">Maaf Password yang Anda masukkan salah</h6><i class="fa fa-exclamation-circle my-auto"></i></div>');
             redirect('Admin');
         }
+    }
+
+    public function resetStatus($id, $nama){
+        $this->m_jemaat->resetStatus($id);
+        $this->session->set_flashdata('pesan', '<div class="alert alert-success d-flex justify-content-between" role="alert"></i> <h6 class="my-auto">Status pemilih <b>'.urldecode($nama).'</b> berhasil direset</h6><i class="fa fa-check my-auto"></i></div>');
+        redirect('Admin/kehadiran');
     }
 
     // public function tambahJemaat()

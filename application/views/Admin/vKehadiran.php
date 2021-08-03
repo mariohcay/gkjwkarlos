@@ -28,7 +28,7 @@
 
 
               <!-- Page Heading -->
-              <?= $this->session->flashdata('message'); ?>
+              <?= $this->session->flashdata('pesan'); ?>
               <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Daftar Jemaat yang Belum Memilih</h6>
@@ -61,11 +61,50 @@
 
               <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Daftar Jemaat yang Sudah Memilih</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">Daftar Jemaat yang Sedang Memilih</h6>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table class="table table-striped" id="dataTable2" width="100%" cellspacing="0">
+                      <thead>
+                        <tr>
+                          <th>Id</th>
+                          <th>Nama</th>
+                          <th>Kelompok</th>
+                          <th>Status</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php foreach ($sedang as $data) : ?>
+                          <tr>
+                            <td><?= $data['id'] ?></td>
+                            <td><?= $data['nama'] ?></td>
+                            <td><?= $data['kelompok'] ?></td>
+                            <td><?= $data['status'] ?></td>
+                            <td>
+                              <a href="<?= base_url('Admin/resetStatus/'.$data['id'].'/'.$data['nama']) ?>" class="btn-sm btn-info btn-icon-split font-weight-bold ml-4 text-decoration-none" id="tambah">
+                                <span class="icon text-white-50">
+                                  <i class="fas fa-refresh text-white"></i>
+                                </span>
+                                <span class="text">RESET</span>
+                              </a>
+                            </td>
+                          </tr>
+                        <?php endforeach; ?>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Daftar Jemaat yang Sudah Memilih</h6>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-striped" id="dataTable3" width="100%" cellspacing="0">
                       <thead>
                         <tr>
                           <th>Id</th>
@@ -116,7 +155,7 @@
 
             <script>
               $(document).ready(function() {
-                $('#dataTable, #dataTable2').DataTable({
+                $('#dataTable, #dataTable2, #dataTable3').DataTable({
                   "order": [],
                   "pageLength": 25
                 });

@@ -18,11 +18,13 @@
         <h6 class="font-weight-bold">
           <?php
           if ($kelompok === "Karangploso") {
-            echo "Pilihlah maksimal 15 nama yang akan Bpk/Ibu/Sdr/I calonkan sebagai Penatua & Diaken.";
-          } else if ($kelompok === "Pendem" || $kelompok === "GPA") {
-            echo "Pilihlah maksimal 6 nama yang akan Bpk/Ibu/Sdr/I calonkan sebagai Penatua & Diaken.";
+            echo "Berikut nama - nama calon Penatua dan Diaken. <b>UNTUK KELOMPOK KARANGPLOSO</b> diharapkan mencalonkan <b>maksimal 15 orang</b> yang terdiri dari <b>7 calon LAKI-LAKI</b> dan <b>8 calon PEREMPUAN.</b>";
+          } else if ($kelompok === "Pendem") {
+            echo "Berikut nama - nama calon Penatua dan Diaken. <b>UNTUK PEPANTHAN PENDEM</b> diharapkan mencalonkan <b>maksimal 6 orang</b> yang terdiri dari <b>4 calon LAKI-LAKI</b> dan <b>2 calon PEREMPUAN.</b>";
+          } else if ($kelompok === "GPA") {
+            echo "Berikut nama - nama calon Penatua dan Diaken. <b>UNTUK KELOMPOK GPA</b> diharapkan mencalonkan <b>maksimal 6 orang</b> yang terdiri dari <b>3 calon LAKI-LAKI</b> dan <b>3 calon PEREMPUAN.</b>";
           } else if ($kelompok === "Babaan") {
-            echo "Pilihlah maksimal 4 nama yang akan Bpk/Ibu/Sdr/I calonkan sebagai Penatua & Diaken.";
+            echo "Berikut nama - nama calon Penatua dan Diaken. <b>UNTUK KELOMPOK BABAAN</b> diharapkan mencalonkan <b>maksimal 4 orang</b> yang terdiri dari <b>2 calon LAKI-LAKI</b> dan <b>2 calon PEREMPUAN.</b>";
           }
           ?>
         </h6>

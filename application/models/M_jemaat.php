@@ -27,7 +27,16 @@ class M_jemaat extends CI_Model
     {
         return $this->db->get_where('tb_jemaat', ['status' => 'Belum Memilih'])->result_array();
     }
-    
+
+    public function sedangMemilih()
+    {
+        return $this->db->get_where('tb_jemaat', ['status' => 'Sedang Memilih'])->result_array();
+    }
+
+    public function resetStatus($id){
+        $this->db->set('status', 'Belum Memilih')->where('id', $id)->update('tb_jemaat');
+    }
+
     public function tambahJemaat($data){
         return $this->db->insert('tb_jemaat', $data);
     }
