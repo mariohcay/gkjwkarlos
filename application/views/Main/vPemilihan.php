@@ -2,15 +2,13 @@
 
   <form action="<?= base_url('Dashboard/konfirmasiPilihan') ?>" method="POST">
     <nav class="navbar bg-white topbar shadow-lg fixed-top d-flex align-items-center justify-content-between px-5">
-      <div class="row align-items-center">
-        <h4 class="text-gray-800 h5">Daftar Calon Penatua & Diaken dari Kelompok <b><?= $kelompok ?></b></h4>
+      <div class="row align-items-center justify-content-between">
+        <h5 class="text-gray-800 h5 mb-0" id="terpilih"></h5>
         <div id="kelompok" class="d-none" class="ml-2">
           <h5><b><u><?= $kelompok ?></u></b></h5>
         </div>
       </div>
     </nav>
-
-
 
     <div class="container-fluid mt-5" id="main">
 
@@ -18,13 +16,13 @@
         <h6 class="font-weight-bold">
           <?php
           if ($kelompok === "Karangploso") {
-            echo "Berikut nama - nama calon Penatua dan Diaken. <b>UNTUK KELOMPOK KARANGPLOSO</b> diharapkan mencalonkan <b>maksimal 15 orang</b> yang terdiri dari <b>7 calon LAKI-LAKI</b> dan <b>8 calon PEREMPUAN.</b>";
+            echo "Berikut nama - nama calon Penatua dan Diaken. <b class='text-uppercase'>UNTUK KELOMPOK ".$kelompok."</b> diharapkan mencalonkan <b>maksimal 15 orang</b> yang terdiri dari <b>7 calon LAKI-LAKI</b> dan <b>8 calon PEREMPUAN.</b>";
           } else if ($kelompok === "Pendem") {
-            echo "Berikut nama - nama calon Penatua dan Diaken. <b>UNTUK PEPANTHAN PENDEM</b> diharapkan mencalonkan <b>maksimal 6 orang</b> yang terdiri dari <b>4 calon LAKI-LAKI</b> dan <b>2 calon PEREMPUAN.</b>";
+            echo "Berikut nama - nama calon Penatua dan Diaken. <b class='text-uppercase'>UNTUK PEPANTHAN ".$kelompok."</b> diharapkan mencalonkan <b>maksimal 6 orang</b> yang terdiri dari <b>4 calon LAKI-LAKI</b> dan <b>2 calon PEREMPUAN.</b>";
           } else if ($kelompok === "GPA") {
-            echo "Berikut nama - nama calon Penatua dan Diaken. <b>UNTUK KELOMPOK GPA</b> diharapkan mencalonkan <b>maksimal 6 orang</b> yang terdiri dari <b>3 calon LAKI-LAKI</b> dan <b>3 calon PEREMPUAN.</b>";
+            echo "Berikut nama - nama calon Penatua dan Diaken. <b class='text-uppercase'>UNTUK KELOMPOK ".$kelompok."</b> diharapkan mencalonkan <b>maksimal 6 orang</b> yang terdiri dari <b>3 calon LAKI-LAKI</b> dan <b>3 calon PEREMPUAN.</b>";
           } else if ($kelompok === "Babaan") {
-            echo "Berikut nama - nama calon Penatua dan Diaken. <b>UNTUK KELOMPOK BABAAN</b> diharapkan mencalonkan <b>maksimal 4 orang</b> yang terdiri dari <b>2 calon LAKI-LAKI</b> dan <b>2 calon PEREMPUAN.</b>";
+            echo "Berikut nama - nama calon Penatua dan Diaken. <b class='text-uppercase'>UNTUK KELOMPOK ".$kelompok."</b> diharapkan mencalonkan <b>maksimal 4 orang</b> yang terdiri dari <b>2 calon LAKI-LAKI</b> dan <b>2 calon PEREMPUAN.</b>";
           }
           ?>
         </h6>
@@ -40,7 +38,7 @@
                   <div class="col-lg-6 col-sm-6 mb-4">
                     <li class="list-group-item list-group-item-primary py-2">
                       <div class="form-check h5 d-flex align-items-center mb-0">
-                        <input class="form-check-input my-0" type="checkbox" value="<?= $data['noUrut'] ?>" name="majelis[]" style="transform: scale(1.7);">
+                        <input class="form-check-input my-0" type="checkbox" value="<?= $data['noUrut'] ?>" name="majelis[]" id="lakiLaki" style="transform: scale(1.7);">
                         <div class="ml-4">
                           <label class="form-check-label font-weight-bold h6"><?= $data['nama'] ?></label><br>
                           <label class="form-check-label h6">Jenis Kelamin
@@ -59,7 +57,7 @@
                   <div class="col-lg-6 col-sm-6 mb-4">
                     <li class="list-group-item list-group-item-danger py-2">
                       <div class="form-check h5 d-flex align-items-center mb-0">
-                        <input class="form-check-input my-0" type="checkbox" value="<?= $data['noUrut'] ?>" name="majelis[]" style="transform: scale(1.7);">
+                        <input class="form-check-input my-0" type="checkbox" value="<?= $data['noUrut'] ?>" name="majelis[]" id="perempuan" style="transform: scale(1.7);">
                         <div class="ml-4">
                           <label class="form-check-label font-weight-bold h6"><?= $data['nama'] ?></label><br>
                           <label class="form-check-label h6">Jenis Kelamin
@@ -93,28 +91,46 @@
 <script>
   var kelompok = "";
   var max = 0;
+  var l = 0;
+  var p = 0;
+  var lakiLaki = 0;
+  var perempuan = 0;
   var numberOfChecked = 0;
   var totalCheckBox = $('input:checkbox').length;
 
   $(document).ready(function() {
     kelompok = $("#kelompok").text().trim();
     numberOfChecked = $("input:checkbox:checked").length;
+    lakiLaki = $('#lakiLaki:checked').length;
+    perempuan = $('#perempuan:checked').length;
 
     if (kelompok == "Karangploso") {
       max = 15;
+      l = 7;
+      p = 8;
       $('#pilihan').text("Terpilih " + numberOfChecked + " dari " + max);
+      $('#terpilih').text("Terpilih " + lakiLaki + " dari " + l + " calon laki-laki dan " + perempuan + " dari " + p + " calon perempuan");
     }
     if (kelompok == "Pendem") {
       max = 6;
+      l = 4;
+      p = 2;
       $('#pilihan').text("Terpilih " + numberOfChecked + " dari " + max);
+      $('#terpilih').text("Terpilih " + lakiLaki + " dari " + l + " calon laki-laki dan " + perempuan + " dari " + p + " calon perempuan");
     }
     if (kelompok == "GPA") {
       max = 6;
+      l = 3;
+      p = 3;
       $('#pilihan').text("Terpilih " + numberOfChecked + " dari " + max);
+      $('#terpilih').text("Terpilih " + lakiLaki + " dari " + l + " calon laki-laki dan " + perempuan + " dari " + p + " calon perempuan");
     }
     if (kelompok == "Babaan") {
       max = 4;
+      l = 2;
+      p = 2;
       $('#pilihan').text("Terpilih " + numberOfChecked + " dari " + max);
+      $('#terpilih').text("Terpilih " + lakiLaki + " dari " + l + " calon laki-laki dan " + perempuan + " dari " + p + " calon perempuan");
     }
 
     if (numberOfChecked > 0) {
@@ -132,9 +148,19 @@
 
   $("input:checkbox").click(function() {
     numberOfChecked = $("input:checkbox:checked").length;
+    lakiLaki = $('#lakiLaki:checked').length;
+    perempuan = $('#perempuan:checked').length;
 
     if (numberOfChecked > max) {
-      alert("Anda hanya dapat memilih " + max + " Calon")
+      alert("Anda hanya dapat memilih " + max + " calon")
+      return false;
+    }
+    if (lakiLaki > l){
+      alert("Anda hanya dapat memilih " + l + " calon laki-laki")
+      return false;
+    }
+    if (perempuan > p){
+      alert("Anda hanya dapat memilih " + p + " calon perempuan")
       return false;
     }
     if (numberOfChecked > 0) {
@@ -145,13 +171,16 @@
 
     if (kelompok == "Karangploso") {
       $('#pilihan').text("Terpilih " + numberOfChecked + " dari " + max);
+      $('#terpilih').text("Terpilih " + lakiLaki + " dari " + l + " calon laki-laki dan " + perempuan + " dari " + p + " calon perempuan");
     } else if (kelompok == "Pendem") {
       $('#pilihan').text("Terpilih " + numberOfChecked + " dari " + max);
+      $('#terpilih').text("Terpilih " + lakiLaki + " dari " + l + " calon laki-laki dan " + perempuan + " dari " + p + " calon perempuan");
     } else if (kelompok == "GPA") {
       $('#pilihan').text("Terpilih " + numberOfChecked + " dari " + max);
+      $('#terpilih').text("Terpilih " + lakiLaki + " dari " + l + " calon laki-laki dan " + perempuan + " dari " + p + " calon perempuan");
     } else if (kelompok == "Babaan") {
       $('#pilihan').text("Terpilih " + numberOfChecked + " dari " + max);
-    } else
-      $('#pilihan').text("Terpilih " + numberOfChecked + " dari " + max);
+      $('#terpilih').text("Terpilih " + lakiLaki + " dari " + l + " calon laki-laki dan " + perempuan + " dari " + p + " calon perempuan");
+    } 
   });
 </script>
