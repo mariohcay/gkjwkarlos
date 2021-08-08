@@ -13,6 +13,19 @@ class Admin extends CI_Controller
         $this->load->model('m_majelis');
     }
 
+    public function convert(){
+        $jemaat = $this->m_jemaat->semuaJemaat();
+        foreach ($jemaat as $data){
+            echo password_hash($data['password'], PASSWORD_BCRYPT)."</br>";
+        }
+    }
+
+    public function reset(){
+        $this->m_jemaat->reset();
+        $this->session->set_flashdata('pesan', '<div class="alert alert-success d-flex justify-content-between" role="alert"></i> <h6 class="my-auto">Seluruh sistem telah berhasil direset</h6><i class="fa fa-check my-auto"></i></div>');
+        redirect('Admin/kehadiran');
+    }
+
     public function index()
     {
         $data['title'] = 'Pemilihan Majelis - GKJW Jemaat Karangploso';
@@ -65,44 +78,6 @@ class Admin extends CI_Controller
         $this->session->set_flashdata('pesan', '<div class="alert alert-success d-flex justify-content-between" role="alert"></i> <h6 class="my-auto">Status pemilih <b>'.urldecode($nama).'</b> berhasil direset</h6><i class="fa fa-check my-auto"></i></div>');
         redirect('Admin/kehadiran');
     }
-
-    // public function tambahJemaat()
-    // {
-    //     $data['title'] = 'Pemilihan Majelis - GKJW Jemaat Karangploso Periode xxxx/xxxx';
-    //     $data['jumlah'] = count($this->m_jemaat->semuaJemaat());
-
-    //     $this->load->view('Templates/vHeader', $data);
-    //     $this->load->view('Admin/vTambahJemaat');
-    //     $this->load->view('Templates/vFooter');
-    // }
-
-    // public function submitTambahJemaat(){
-    //     $nama = $this->input->post('nama');
-    //     $data = [
-    //         'id' => $this->input->post('id'),
-    //         'nama' => $this->input->post('nama'),
-    //         'kelompok' => $this->input->post('kelompok')
-    //     ];
-    //     $this->m_jemaat->tambahJemaat($data);
-    //     $this->session->set_flashdata('message', '<div class="alert alert-success d-flex justify-content-between" role="alert">
-    //     <i class="fa fa-check my-auto"></i>
-    //     </i> <h6 class="my-auto">Data jemaat <b>' . $nama . '</b> berhasil ditambahkan</h6>
-    //     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></div>');
-    //     redirect('Admin');
-    // }
-
-    // public function submitHadir($id)
-    // {
-    //     date_default_timezone_set("Asia/Jakarta");
-    //     $password = date('His');
-    //     $jemaat = $this->m_jemaat->ambilJemaat($id);
-    //     $this->m_jemaat->updateKehadiran($id, $password);
-    //     $this->session->set_flashdata('message', '<div class="alert alert-success d-flex justify-content-between" role="alert">
-    //     <i class="fa fa-check my-auto"></i>
-    //     </i> <h6 class="my-auto">Terima kasih <b>' . $jemaat['nama'] . '</b>, silahkan menunggu giliran, password Anda: <b>' . $password . '</b></h6>
-    //     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></div>');
-    //     redirect('Admin');
-    // }
 
     public function hasil()
     {

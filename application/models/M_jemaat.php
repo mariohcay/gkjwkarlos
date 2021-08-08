@@ -56,4 +56,9 @@ class M_jemaat extends CI_Model
     public function selesaiPilih($id){
         $this->db->set('status', 'Sudah Memilih')->where('id', $id)->update('tb_jemaat');
     }
+
+    public function reset(){
+        $this->db->set('status', 'Belum Memilih')->update('tb_jemaat');
+        $this->db->set('suara', 0)->update('tb_majelis');
+    }
 }
