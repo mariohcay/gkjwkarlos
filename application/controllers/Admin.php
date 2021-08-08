@@ -13,24 +13,47 @@ class Admin extends CI_Controller
         $this->load->model('m_majelis');
     }
 
-    public function convert(){
+    public function convert()
+    {
         $jemaat = $this->m_jemaat->semuaJemaat();
-        foreach ($jemaat as $data){
-            echo password_hash($data['password'], PASSWORD_BCRYPT)."</br>";
+        foreach ($jemaat as $data) {
+            echo password_hash($data['password'], PASSWORD_BCRYPT) . "</br>";
         }
     }
 
-    public function reset(){
-        $this->m_jemaat->reset();
-        $this->session->set_flashdata('pesan', '<div class="alert alert-success d-flex justify-content-between" role="alert"></i> <h6 class="my-auto">Seluruh sistem telah berhasil direset</h6><i class="fa fa-check my-auto"></i></div>');
-        redirect('Admin/kehadiran');
+    public function reset()
+    {
+        if (!$this->session->userdata('id')) {
+            redirect('Admin');
+        }
+        $data['title'] = 'Pemilihan Majelis - GKJW Jemaat Karangploso';
+
+        $this->load->view('Templates/vHeader', $data);
+        // $this->load->view('Main/vMainHeader');
+        $this->load->view('Admin/vResetPassword');
+        // $this->load->view('Main/vMainFooter');
+        $this->load->view('Templates/vFooter');
+    }
+
+    public function submitResetPassword()
+    {
+        $password = $this->input->post('password');
+        $cek = password_verify($password, '$2a$12$76QLDX1Zask2M.AMYbcHPOQbFSYYvvu1s.PW4U.4EVH9K0eN7RmGa');
+        if ($cek) {
+            $this->m_jemaat->reset();
+            $this->session->set_flashdata('pesan', '<div class="alert alert-success d-flex justify-content-between" role="alert"></i> <h6 class="my-auto">Seluruh sistem telah berhasil direset</h6><i class="fa fa-check my-auto"></i></div>');
+            redirect('Admin/kehadiran');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger d-flex justify-content-between" role="alert"></i> <h6 class="my-auto">Maaf Password yang Anda masukkan salah</h6><i class="fa fa-exclamation-circle my-auto"></i></div>');
+            redirect('Admin/reset');
+        }
     }
 
     public function index()
     {
         $data['title'] = 'Pemilihan Majelis - GKJW Jemaat Karangploso';
 
-        if ($this->session->userdata('id')){
+        if ($this->session->userdata('id')) {
             redirect('Admin/kehadiran');
         }
 
@@ -41,8 +64,9 @@ class Admin extends CI_Controller
         $this->load->view('Templates/vFooter');
     }
 
-    public function kehadiran(){
-        if (!$this->session->userdata('id')){
+    public function kehadiran()
+    {
+        if (!$this->session->userdata('id')) {
             redirect('Admin');
         }
         $data['title'] = 'Pemilihan Majelis - GKJW Jemaat Karangploso';
@@ -60,28 +84,28 @@ class Admin extends CI_Controller
     public function submitPassword()
     {
         $password = $this->input->post('password');
-        if ($password === "admin@gkjwkarlos21") {
-            
-                $this->session->set_userdata([
-                    'id' => 'admin',
-                ]);
-                redirect('Admin/kehadiran');
-            
+        $cek = password_verify($password, '$2a$12$IQ.lUEqyoW3IAKOmwySzbO1W1rCUIbcH40SxISiNH504thIWhMy16');
+        if ($cek) {
+            $this->session->set_userdata([
+                'id' => 'admin',
+            ]);
+            redirect('Admin/kehadiran');
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger d-flex justify-content-between" role="alert"></i> <h6 class="my-auto">Maaf Password yang Anda masukkan salah</h6><i class="fa fa-exclamation-circle my-auto"></i></div>');
             redirect('Admin');
         }
     }
 
-    public function resetStatus($id, $nama){
+    public function resetStatus($id, $nama)
+    {
         $this->m_jemaat->resetStatus($id);
-        $this->session->set_flashdata('pesan', '<div class="alert alert-success d-flex justify-content-between" role="alert"></i> <h6 class="my-auto">Status pemilih <b>'.urldecode($nama).'</b> berhasil direset</h6><i class="fa fa-check my-auto"></i></div>');
+        $this->session->set_flashdata('pesan', '<div class="alert alert-success d-flex justify-content-between" role="alert"></i> <h6 class="my-auto">Status pemilih <b>' . urldecode($nama) . '</b> berhasil direset</h6><i class="fa fa-check my-auto"></i></div>');
         redirect('Admin/kehadiran');
     }
 
     public function hasil()
     {
-        if (!$this->session->userdata('id')){
+        if (!$this->session->userdata('id')) {
             redirect('Admin');
         }
         $data['title'] = 'Pemilihan Majelis - GKJW Jemaat Karangploso Periode xxxx/xxxx';
@@ -100,10 +124,10 @@ class Admin extends CI_Controller
         // $this->load->view('Main/vMainFooter');
         $this->load->view('Templates/vFooter');
     }
- 
+
     public function exportExcel()
     {
-        if (!$this->session->userdata('id')){
+        if (!$this->session->userdata('id')) {
             redirect('Admin');
         }
         $karangploso = $this->m_majelis->jumlahSuara("Karangploso");
