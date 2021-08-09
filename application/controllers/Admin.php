@@ -58,9 +58,7 @@ class Admin extends CI_Controller
         }
 
         $this->load->view('Templates/vHeader', $data);
-        // $this->load->view('Main/vMainHeader');
         $this->load->view('Admin/vAdminPassword');
-        // $this->load->view('Main/vMainFooter');
         $this->load->view('Templates/vFooter');
     }
 
@@ -70,6 +68,7 @@ class Admin extends CI_Controller
             redirect('Admin');
         }
         $data['title'] = 'Pemilihan Majelis - GKJW Jemaat Karangploso';
+        $data['jemaat'] = $this->m_jemaat->semuaJemaat();
         $data['sudah'] = $this->m_jemaat->sudahMemilih();
         $data['belum'] = $this->m_jemaat->belumMemilih();
         $data['sedang'] = $this->m_jemaat->sedangMemilih();
@@ -119,9 +118,7 @@ class Admin extends CI_Controller
         $data['jumlahPemilihBabaan'] = $this->m_jemaat->jumlahPemilih("Babaan");
 
         $this->load->view('Templates/vHeader', $data);
-        // $this->load->view('Main/vMainHeader');
         $this->load->view('Admin/vHasil');
-        // $this->load->view('Main/vMainFooter');
         $this->load->view('Templates/vFooter');
     }
 

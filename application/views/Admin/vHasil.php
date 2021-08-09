@@ -1,4 +1,4 @@
-            <nav class="navbar bg-white topbar static-top shadow-lg fixed-top d-flex align-items-center justify-content-between px-5">
+            <nav class="navbar bg-white topbar static-top shadow-lg fixed-top d-flex align-items-center justify-content-between px-4">
                 <h3 class="h5 mb-0 text-gray-800">Hasil Pemilu Majelis Jemaat GKJW Jemaat Karangploso</h3>
             </nav>
 
@@ -8,7 +8,7 @@
 
                 <div class="row mb-4 justify-content-between">
                     <div class="col">
-                        <a href="<?= base_url('Admin/exportExcel') ?>" class="btn-sm btn-success btn-icon-split font-weight-bold ml-4 text-decoration-none">
+                        <a href="<?= base_url('Admin/exportExcel') ?>" class="btn-sm btn-success btn-icon-split font-weight-bold text-decoration-none">
                             <span class="icon text-white-50">
                                 <i class="fas fa-file-excel-o text-white"></i>
                             </span>

@@ -1,4 +1,4 @@
-            <nav class="navbar bg-white topbar static-top shadow-lg fixed-top d-flex align-items-center justify-content-between px-5">
+            <nav class="navbar bg-white topbar static-top shadow-lg fixed-top d-flex align-items-center justify-content-between px-4">
               <h3 class="h5 mb-0 text-gray-800">Daftar Pemilih Pemilu Majelis Jemaat GKJW Karangploso</h3>
 
             </nav>
@@ -9,7 +9,7 @@
 
               <div class="row mb-4">
                 <div class="col">
-                  <a href="<?= base_url('Admin/hasil') ?>" class="btn-sm btn-primary btn-icon-split font-weight-bold ml-4" id="tambah">
+                  <a href="<?= base_url('Admin/hasil') ?>" class="btn-sm btn-primary btn-icon-split font-weight-bold text-decoration-none">
                     <span class="icon text-white-50">
                       <i class="fas fa-eye text-white"></i>
                     </span>
@@ -26,10 +26,75 @@
                 </div>
               </div>
 
+              <div class="row">
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                  <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Total Pemilih</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800"><?= count($jemaat) ?></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                  <div class="card border-left-danger shadow h-100 py-2">
+                    <a href="#belum" class="text-decoration-none scroll">
+                      <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                          <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                              Belum Memilih</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= count($belum) ?></div>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                  <div class="card border-left-warning shadow h-100 py-2">
+                    <a href="#sedang" class="text-decoration-none scroll">
+                      <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                          <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                              Sedang Memilih</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= count($sedang) ?></div>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                  <div class="card border-left-success shadow h-100 py-2">
+                    <a href="#sudah" class="text-decoration-none scroll">
+                      <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                          <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                              Sudah Memilih</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= count($sudah) ?></div>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+
+              </div>
 
               <!-- Page Heading -->
               <?= $this->session->flashdata('pesan'); ?>
-              <div class="card shadow mb-4">
+              <div class="card shadow mb-4" id="belum">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Daftar Jemaat yang Belum Memilih</h6>
                 </div>
@@ -59,7 +124,7 @@
                 </div>
               </div>
 
-              <div class="card shadow mb-4">
+              <div class="card shadow mb-4" id="sedang">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Daftar Jemaat yang Sedang Memilih</h6>
                 </div>
@@ -83,7 +148,7 @@
                             <td><?= $data['kelompok'] ?></td>
                             <td><?= $data['status'] ?></td>
                             <td>
-                              <a href="<?= base_url('Admin/resetStatus/'.$data['id'].'/'.$data['nama']) ?>" class="btn-sm btn-info btn-icon-split font-weight-bold ml-4 text-decoration-none" id="tambah">
+                              <a href="<?= base_url('Admin/resetStatus/' . $data['id'] . '/' . $data['nama']) ?>" class="btn-sm btn-info btn-icon-split font-weight-bold ml-4 text-decoration-none" id="tambah">
                                 <span class="icon text-white-50">
                                   <i class="fas fa-refresh text-white"></i>
                                 </span>
@@ -98,7 +163,7 @@
                 </div>
               </div>
 
-              <div class="card shadow mb-4">
+              <div class="card shadow mb-4" id="sudah">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Daftar Jemaat yang Sudah Memilih</h6>
                 </div>
@@ -160,5 +225,15 @@
                   "pageLength": 25
                 });
                 $('table.display').DataTable();
+
+                $('.scroll').on('click', function(e) {
+                  e.preventDefault();
+                  var offset = 90;
+                  var target = this.hash;
+                  if ($(this).data('offset') != undefined) offset = $(this).data('offset');
+                  $('html, body').stop().animate({
+                    'scrollTop': $(target).offset().top - offset
+                  }, 0, '', function() {});
+                });
               });
             </script>
