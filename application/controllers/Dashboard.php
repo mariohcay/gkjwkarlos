@@ -14,7 +14,7 @@ class Dashboard extends CI_Controller
         if ($this->session->userdata('id')){
             $this->m_jemaat->setBelumMemilih($this->session->userdata('id'));
         }
-        $data['title'] = 'Pemilihan Majelis - GKJW Jemaat Karangploso Periode xxxx/xxxx';
+        $data['title'] = 'Pemilihan Majelis - GKJW Jemaat Karangploso';
 
         $this->load->view('Templates/vHeader', $data);
         $this->load->view('Main/vPassword');
@@ -64,7 +64,7 @@ class Dashboard extends CI_Controller
     public function pemilihan()
     {
         if ($this->session->userdata('id')) {
-            $data['title'] = 'Pemilihan Majelis - GKJW Jemaat Karangploso Periode xxxx/xxxx';
+            $data['title'] = 'Pemilihan Majelis - GKJW Jemaat Karangploso';
 
             $this->m_jemaat->setSedangMemilih($this->session->userdata('id'));
             $kelompok = $this->session->userdata('kelompok');
@@ -86,7 +86,7 @@ class Dashboard extends CI_Controller
     public function konfirmasiPilihan()
     {
         if ($this->session->userdata('id')) {
-            $data['title'] = 'Pemilihan Majelis - GKJW Jemaat Karangploso Periode xxxx/xxxx';
+            $data['title'] = 'Pemilihan Majelis - GKJW Jemaat Karangploso';
 
             $pilihan = $this->input->post('majelis');
             $data['majelis'] = [];
@@ -116,7 +116,7 @@ class Dashboard extends CI_Controller
     public function selesai()
     {
         if ($this->session->userdata('id')) {
-            $data['title'] = 'Pemilihan Majelis - GKJW Jemaat Karangploso Periode xxxx/xxxx';
+            $data['title'] = 'Pemilihan Majelis - GKJW Jemaat Karangploso';
             $id = $this->session->userdata('id');
             $this->m_jemaat->selesaiPilih($id);
 
@@ -132,7 +132,7 @@ class Dashboard extends CI_Controller
 
     public function hasil()
     {
-        $data['title'] = 'Pemilihan Majelis - GKJW Jemaat Karangploso Periode xxxx/xxxx';
+        $data['title'] = 'Pemilihan Majelis - GKJW Jemaat Karangploso';
         $data['karangploso'] = $this->m_majelis->jumlahSuara("Karangploso");
         $data['pendem'] = $this->m_majelis->jumlahSuara("Pendem");
         $data['gpa'] = $this->m_majelis->jumlahSuara("GPA");

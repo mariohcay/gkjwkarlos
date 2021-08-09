@@ -107,7 +107,7 @@ class Admin extends CI_Controller
         if (!$this->session->userdata('id')) {
             redirect('Admin');
         }
-        $data['title'] = 'Pemilihan Majelis - GKJW Jemaat Karangploso Periode xxxx/xxxx';
+        $data['title'] = 'Pemilihan Majelis - GKJW Jemaat Karangploso';
         $data['karangploso'] = $this->m_majelis->jumlahSuara("Karangploso");
         $data['pendem'] = $this->m_majelis->jumlahSuara("Pendem");
         $data['gpa'] = $this->m_majelis->jumlahSuara("GPA");
