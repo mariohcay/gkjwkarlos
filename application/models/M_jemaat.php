@@ -7,7 +7,7 @@ class M_jemaat extends CI_Model
     }
     
     public function listNama($kelompok){
-        return $this->db->get_where('tb_jemaat', ['kelompok' => $kelompok])->result_array();
+        return $this->db->order_by('nama', 'ASC')->get_where('tb_jemaat', ['kelompok' => $kelompok, 'status' => 'Belum Memilih'])->result_array();
     }
 
     public function setBelumMemilih($id){
