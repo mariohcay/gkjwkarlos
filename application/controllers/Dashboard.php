@@ -11,6 +11,12 @@ class Dashboard extends CI_Controller
 
     public function index()
     {
+        date_default_timezone_set("Asia/Jakarta");
+        $date = new DateTime('2021-8-18');
+        date_time_set($date, 23, 59, 59);
+        if(date('Y-m-d H:i:s') > date_format($date, 'Y-m-d H:i:s')){
+            redirect("Dashboard/hasil");
+        }
         if ($this->session->userdata('id')) {
             $this->m_jemaat->setBelumMemilih($this->session->userdata('id'));
         }
@@ -62,6 +68,12 @@ class Dashboard extends CI_Controller
 
     public function pemilihan()
     {
+        date_default_timezone_set("Asia/Jakarta");
+        $date = new DateTime('2021-8-18');
+        date_time_set($date, 23, 59, 59);
+        if(date('Y-m-d H:i:s') > date_format($date, 'Y-m-d H:i:s')){
+            redirect("Dashboard/hasil");
+        }
         if ($this->session->userdata('id')) {
             $data['title'] = 'Pemilihan Majelis - GKJW Jemaat Karangploso';
 
@@ -84,6 +96,12 @@ class Dashboard extends CI_Controller
 
     public function konfirmasiPilihan()
     {
+        date_default_timezone_set("Asia/Jakarta");
+        $date = new DateTime('2021-8-18');
+        date_time_set($date, 23, 59, 59);
+        if(date('Y-m-d H:i:s') > date_format($date, 'Y-m-d H:i:s')){
+            redirect("Dashboard/hasil");
+        }
         if ($this->session->userdata('id')) {
             $data['title'] = 'Pemilihan Majelis - GKJW Jemaat Karangploso';
 
@@ -114,6 +132,12 @@ class Dashboard extends CI_Controller
 
     public function selesai()
     {
+        date_default_timezone_set("Asia/Jakarta");
+        $date = new DateTime('2021-8-18');
+        date_time_set($date, 23, 59, 59);
+        if(date('Y-m-d H:i:s') > date_format($date, 'Y-m-d H:i:s')){
+            redirect("Dashboard/hasil");
+        }
         if ($this->session->userdata('id')) {
             $data['title'] = 'Pemilihan Majelis - GKJW Jemaat Karangploso';
             $id = $this->session->userdata('id');
