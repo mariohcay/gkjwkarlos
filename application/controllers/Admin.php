@@ -131,6 +131,8 @@ class Admin extends CI_Controller
         $pendem = $this->m_majelis->jumlahSuara("Pendem");
         $gpa = $this->m_majelis->jumlahSuara("GPA");
         $babaan = $this->m_majelis->jumlahSuara("Babaan");
+        $sudah = $this->m_jemaat->sudahMemilih();
+        $belum = $this->m_jemaat->belumMemilih();
 
         require('./vendor/autoload.php');
 
@@ -198,6 +200,34 @@ class Admin extends CI_Controller
                 ->setCellValue('C' . $row, $data['kelompok'])
                 ->setCellValue('D' . $row, $data['suara']);
             $spreadsheet->setActiveSheetIndex(3)->getStyle('A' . $row . ':D' . $row)->applyFromArray($styleArray);
+            ++$row;
+        }
+
+        $row = 2;
+        foreach ($sudah as $data) {
+            $spreadsheet->setActiveSheetIndex(4);
+            $spreadsheet->getActiveSheet()->insertNewRowBefore($row + 1, 1);
+            $spreadsheet->setActiveSheetIndex(4)
+                ->setCellValue('A' . $row, ($row - 1))
+                ->setCellValue('B' . $row, $data['nama'])
+                ->setCellValue('C' . $row, $data['jenisKelamin'])
+                ->setCellValue('D' . $row, $data['kelompok'])
+                ->setCellValue('E' . $row, $data['status']);
+            $spreadsheet->setActiveSheetIndex(4)->getStyle('A' . $row . ':E' . $row)->applyFromArray($styleArray);
+            ++$row;
+        }
+
+        $row = 2;
+        foreach ($belum as $data) {
+            $spreadsheet->setActiveSheetIndex(5);
+            $spreadsheet->getActiveSheet()->insertNewRowBefore($row + 1, 1);
+            $spreadsheet->setActiveSheetIndex(5)
+                ->setCellValue('A' . $row, ($row - 1))
+                ->setCellValue('B' . $row, $data['nama'])
+                ->setCellValue('C' . $row, $data['jenisKelamin'])
+                ->setCellValue('D' . $row, $data['kelompok'])
+                ->setCellValue('E' . $row, $data['status']);
+            $spreadsheet->setActiveSheetIndex(5)->getStyle('A' . $row . ':E' . $row)->applyFromArray($styleArray);
             ++$row;
         }
 
